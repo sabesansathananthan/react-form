@@ -43,6 +43,7 @@ export default class Contact extends Component {
       .catch(() => {
         console.log("Message not sent");
       });
+    console.log(data);
   };
 
   render() {
