@@ -36,10 +36,7 @@ export default class Contact extends Component {
     };
 
     axios
-      .post(
-        "https://form-backend-git-master.sabesansathananthan.vercel.app/",
-        data
-      )
+      .post("https://formbackend.vercel.app/api/v1", data)
       .then((res) => {
         this.setState({ sent: true }, this.resetForm());
       })
