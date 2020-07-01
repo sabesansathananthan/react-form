@@ -26,7 +26,7 @@ export default class Contact extends Component {
     }, 3000);
   };
 
-  formSubmit = (e) => {
+  formSubmit = async (e) => {
     e.preventDefault();
     this.setState({
       buttonText: "...sending",
@@ -39,15 +39,12 @@ export default class Contact extends Component {
       subject: this.state.subject,
     };
 
-    axios
-      .post("https://nodejs-express-2rml59ma4.now.sh/api/v1", data)
-      .then((res) => {
-        this.setState({ sent: true }, this.resetForm());
-      })
-      .catch(() => {
-        console.log("Message not sent");
-      });
-    console.log(data);
+    try {
+      await axios.post("https://nodejs-express-2rml59ma4.now.sh/api/v1", data);
+      this.setState({ sent: true }, this.resetForm());
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   render() {
