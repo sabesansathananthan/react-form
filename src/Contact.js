@@ -10,6 +10,7 @@ export default class Contact extends Component {
     subject: "",
     sent: false,
     buttonText: "Send Message",
+    emailError: false,
   };
 
   resetForm = () => {
@@ -26,6 +27,26 @@ export default class Contact extends Component {
     }, 3000);
   };
 
+  handleChangeEmail(e) {
+    if (
+      !e.target.value.match(
+        /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+      )
+    ) {
+      this.setState({
+        email: e.target.value,
+      });
+      this.setState({ emailError: true });
+
+      if (this.state.email === "") {
+        // check if the input is empty
+        this.setState({ emailError: false });
+      }
+    } else {
+      this.setState({ email: e.target.value, emailError: false });
+    }
+  }
+
   formSubmit = async (e) => {
     e.preventDefault();
     this.setState({
@@ -40,7 +61,7 @@ export default class Contact extends Component {
     };
 
     try {
-      await axios.post("https://nodejs-express-2rml59ma4.now.sh/api/v1", data);
+      await axios.post("formbackend.vercel.app/api/v1", data);
       this.setState({ sent: true }, this.resetForm());
     } catch (error) {
       console.log(error);
@@ -60,6 +81,7 @@ export default class Contact extends Component {
           value={this.state.message}
           onChange={(e) => this.setState({ message: e.target.value })}
           required
+          type="text"
         />
         <br />
         <br />
@@ -73,6 +95,7 @@ export default class Contact extends Component {
           value={this.state.name}
           onChange={(e) => this.setState({ name: e.target.value })}
           required
+          type="text"
         />
         <br />
         <br />
@@ -84,8 +107,11 @@ export default class Contact extends Component {
           placeholder="Enter email address"
           variant="outlined"
           value={this.state.email}
-          onChange={(e) => this.setState({ email: e.target.value })}
+          onChange={(e) => this.handleChangeEmail(e)}
+          error={this.state.emailError}
+          // onChange={(e) => this.setState({ email: e.target.value })}
           required
+          type="email"
         />
         <br />
         <br />
