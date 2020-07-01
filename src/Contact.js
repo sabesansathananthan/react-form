@@ -20,6 +20,10 @@ export default class Contact extends Component {
       subject: "",
       buttonText: "Message Sent",
     });
+
+    setTimeout(() => {
+      this.setState({ sent: false });
+    }, 3000);
   };
 
   formSubmit = (e) => {
@@ -36,7 +40,7 @@ export default class Contact extends Component {
     };
 
     axios
-      .post("https://formbackend.vercel.app/api/v1", data)
+      .post("https://nodejs-express-2rml59ma4.now.sh/api/v1", data)
       .then((res) => {
         this.setState({ sent: true }, this.resetForm());
       })
