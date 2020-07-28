@@ -61,7 +61,7 @@ export default class Contact extends Component {
     };
 
     try {
-      await axios.post("https://formbackend.vercel.app/api/v1", data);
+      await axios.post("form-backend-56ve5j7hk.vercel.app", data);
       this.setState({ sent: true }, this.resetForm());
     } catch (error) {
       console.log(error);
