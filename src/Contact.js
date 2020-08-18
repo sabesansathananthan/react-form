@@ -74,7 +74,7 @@ export default class Contact extends Component {
         <TextField
           id="standard-multiline-flexible"
           label="Message"
-          placeholder="Enter message"
+          placeholder="Enter Message"
           variant="outlined"
           multiline
           rowsMax={4}
